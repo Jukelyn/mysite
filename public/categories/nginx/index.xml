@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on Jukelyn</title>
+    <link>http://jukelyn.com/categories/nginx/</link>
+    <description>Recent content in Nginx on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How To Setup Nginx Proxy Manager Using Portainer (Docker) </title>
+      <link>http://jukelyn.com/posts/npm/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/npm/</guid>
+      <description>Jump to Updates&#xA;What is Nginx Proxy Manager? Link to heading Nginx Proxy Manager (NPM) is a web-based, easy-to-use tool that simplifies the management of Nginx reverse proxies. It allows users to manage their reverse proxies, SSL certificates, and forwarding rules with a graphical user interface (GUI), making it much easier for beginners or non-experts to set up and manage web servers. Here&amp;rsquo;s an overview of what Nginx Proxy Manager offers:</description>
+    </item>
+    <item>
+      <title>How To Setup Nginx As A Webserver Using Portainer (Docker)</title>
+      <link>http://jukelyn.com/posts/nginx/</link>
+      <pubDate>Fri, 21 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/nginx/</guid>
+      <description>Jump to Updates&#xA;What is nginx? Link to heading Nginx (pronounced &amp;ldquo;engine X&amp;rdquo;) is an open-source web server software known for its high performance, stability, and low resource usage. It serves static content, acts as a reverse proxy and load balancer, and can cache HTTP responses to improve speed and efficiency. Its simple configuration and ability to handle many simultaneous connections make it ideal for high-traffic websites. Nginx is widely used due to its flexibility and robust feature set, with both open-source and enterprise versions available.</description>
+    </item>
+  </channel>
+</rss>

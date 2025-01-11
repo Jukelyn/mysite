@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SSH on Jukelyn</title>
+    <link>http://jukelyn.com/categories/ssh/</link>
+    <description>Recent content in SSH on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 15 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>All About SSH Keys</title>
+      <link>http://jukelyn.com/posts/ssh-keys/</link>
+      <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/ssh-keys/</guid>
+      <description>Jump to Updates&#xA;What is SSH? Link to heading SSH, or Secure Shell, is a cryptographic network protocol used for secure communication between two computers over an unsecured network. It provides a secure channel over an insecure network by encrypting the data transmitted between the client and the server.&#xA;SSH keys offer a more secure and convenient way to authenticate to remote servers compared to traditional password-based authentication. They are widely used in various scenarios, including server administration, file transfers, and remote command execution.</description>
+    </item>
+  </channel>
+</rss>

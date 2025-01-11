@@ -1,0 +1,88 @@
+baseurl = "http://jukelyn.com"
+title = "Jukelyn"
+theme = "hugo-coder"
+languagecode = "en"
+defaultcontentlanguage = "en"
+buildDrafts = false
+
+paginate = 20
+
+[markup.highlight]
+style = "github-dark"
+
+[params]
+  #author = "Jukelyn"
+  info = ""
+  description = "Jukelyn's personal website"
+  keywords = "blog,developer,personal"
+  avatarurl = "/images/juke.png"
+  #gravatar = "john.doe@example.com"
+
+  faviconSVG = "/images/favicon.svg"
+  favicon_32 = "/images/favicon-32x32.png"
+  favicon_16 = "/images/favicon-16x16.png"
+
+  since = 2023
+
+  colorScheme = "dark"
+  hidecolorschemetoggle = true
+
+[[params.social]]
+name = "Discord"
+icon = "fa-brands fa-discord fa-2x"
+weight = 1
+url = "https://discordapp.com/users/347216701055565827/"
+
+[[params.social]]
+name = "LinkedIn"
+icon = "fa-brands fa-linkedin fa-2x"
+weight = 1
+url = "https://www.linkedin.com/in/mehraza/"
+
+[[params.social]]
+name = "Github"
+icon = "fa-brands fa-github fa-2x"
+weight = 2
+url = "https://github.com/Jukelyn"
+
+[[params.social]]
+name = "YouTube"
+icon = "fa-brands fa-youtube fa-2x"
+weight = 3
+url = "https://www.youtube.com/@jukelyn/"
+
+# [[params.social]]
+# name = "Twitter"
+# icon = "fa-brands fa-twitter fa-2x"
+# weight = 4
+#url = "https://www.twitter.com/jukelyn_/"
+
+[[params.social]]
+name = "Instagram"
+icon = "fa-brands fa-instagram fa-2x"
+weight = 5
+url = "https://www.instagram.com/tbc.juke/"
+
+[languages.en]
+languageName = ":uk:"
+
+[[languages.en.menu.main]]
+name = "About me"
+weight = 1
+url = "about/"
+
+[[languages.en.menu.main]]
+name = "Blog Posts"
+weight = 2
+url = "posts/"
+
+[[languages.en.menu.main]]
+name = "Projects"
+weight = 3
+url = "projects/"
+
+[[languages.en.menu.main]]
+name = "Contact Me"
+weight = 5
+url = "contact/"
+

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  All About SSH Keys · Jukelyn
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="description" content="How to create and use SSH keys to remote login into machines.">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="All About SSH Keys"/>
+<meta name="twitter:description" content="How to create and use SSH keys to remote login into machines."/>
+
+<meta property="og:title" content="All About SSH Keys" />
+<meta property="og:description" content="How to create and use SSH keys to remote login into machines." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://jukelyn.com/posts/ssh-keys/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-03-15T00:00:00+00:00" />
+
+
+
+
+
+<link rel="canonical" href="http://jukelyn.com/posts/ssh-keys/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-dark">
+  
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://jukelyn.com/">
+      Jukelyn
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">About me</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog Posts</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/contact/">Contact Me</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://jukelyn.com/posts/ssh-keys/">
+              All About SSH Keys
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-03-15T00:00:00Z">
+                March 15, 2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/ssh/">SSH</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><a href="#updates" >Jump to Updates</a></p>
+<h3 id="what-is-ssh">
+  What is SSH?
+  <a class="heading-link" href="#what-is-ssh">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>SSH, or Secure Shell, is a cryptographic network protocol used for secure communication between two computers over an unsecured network. It provides a secure channel over an insecure network by encrypting the data transmitted between the client and the server.</p>
+<p>SSH keys offer a more secure and convenient way to authenticate to remote servers compared to traditional password-based authentication. They are widely used in various scenarios, including server administration, file transfers, and remote command execution.</p>
+<h3 id="creating-an-ssh-key">
+  Creating an SSH key
+  <a class="heading-link" href="#creating-an-ssh-key">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>SSH keys can be generated using the ssh-keygen<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> command on Linux, MacOS, and Windows. Whenever I generate SSH keys, I like to use the <em>rsa</em><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> encryption algorithm, there other flags<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> we can use as well. Another flag that I like to use is the <em>b</em> flag to specify the amount of bits in the key to create, I like 4096 bits. Finally, I like to specify the name of the key at this point using the <em>f</em> flag. So my complete command looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-keygen -t rsa -b <span style="color:#a5d6ff">4096</span> -f ~/.ssh/example
+</span></span></code></pre></div><p>Once we run this command, we will be asked to add a passphrase and then confirm it. I choose to not use passphrases as I feel that the SSH key is strong enough. If you feel like, for whatever reason, somebody will get their hands on your key, feel free to add the passphrase as an extra layer of security.</p>
+<h3 id="copying-ssh-public-key-to-a-server">
+  Copying SSH public key to a server
+  <a class="heading-link" href="#copying-ssh-public-key-to-a-server">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Now that we have created an SSH key, say <em>~/.ssh/example</em> and <em>~/.ssh/example.pub</em>, we will want to copy the <em>public</em> key to the server we will use the SSH key with. For this example, the server we will be connecting to is at the private IP <code>192.168.1.1</code> and has a user named <code>juke</code> that I have the password to. To copy the public key to the server we will be using the ssh-copy-id<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> command. We will use the <em>i</em> flag to specify which key will be copying over.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-copy-id -i ~/.ssh/example juke@192.168.1.1
+</span></span></code></pre></div><p>You will be prompted to enter the password of the <code>juke</code> account and upon completion, the key will be copied onto the server.</p>
+<h3 id="logging-in-using-ssh-keys--next-steps">
+  Logging In Using SSH Keys + Next Steps
+  <a class="heading-link" href="#logging-in-using-ssh-keys--next-steps">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Now that we have an SSH public key on the server and we have the private key on our system, we can remotely connect to the server using SSH.</p>
+<blockquote>
+<p>Note: We have not done any kind of Port Forwarding so, at the moment, a connection is only possible when connected to the same LAN (same network). Port Forwarding is mentioned a bit later but I will not be going over how to set that up as it depends on the hardware that you have.</p>
+</blockquote>
+<p>To connect to the server, we can just do the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -i ~/.ssh/example juke@192.168.1.1
+</span></span></code></pre></div><p>Once we are connected to the machine, if this is a machine that you are an admin of, it is a good idea to turn off password authentication and also change the default SSH port from 22 to something else. Once you change the port, be sure to setup Port Forwarding on your router to match so that you are able to connect to the machine from outside the network.</p>
+<h3 id="changing-the-default-ssh-port">
+  Changing the Default ssh Port
+  <a class="heading-link" href="#changing-the-default-ssh-port">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Changing the default SSH port (typically port 22) is a common security practice aimed at reducing the risk of automated attacks. It&rsquo;s important for a few reasons that include:</p>
+<ol>
+<li>Reduction of Brute Force Attacks
+<ul>
+<li>Many automated bots and attackers scan for open ports, especially port 22, to target systems running SSH. By changing the port, you&rsquo;re making it harder for these automated bots to find your SSH service. This doesn&rsquo;t prevent targeted attacks but adds a layer of obscurity.</li>
+</ul>
+</li>
+<li>Reduce Log Spam
+<ul>
+<li>Since most attacks focus on port 22, changing the port reduces the number of brute-force login attempts and failed login attempts that clog up your logs. This makes it easier to spot real security issues.</li>
+</ul>
+</li>
+<li>Security by Obscurity
+<ul>
+<li>While changing the default SSH port doesn&rsquo;t technically enhance the security of your system by itself (it’s more about obscurity), it adds a basic layer of defense. If attackers don&rsquo;t know which port SSH is running on, they have to scan for it, which takes more time and may deter less sophisticated attacks.</li>
+</ul>
+</li>
+<li>Limit Exposure
+<ul>
+<li>Changing the SSH port to a non-standard port can reduce the exposure of your SSH service to opportunistic attacks that rely on default configurations. Attackers tend to target widely known ports, so a custom port might avoid some attention.</li>
+</ul>
+</li>
+<li>Integration with Firewalls
+<ul>
+<li>By changing the SSH port and locking down other ports through firewalls, you make your server more secure. This way, attackers would need to know the port you&rsquo;re using to even begin attacking the service.</li>
+</ul>
+</li>
+</ol>
+<p>While this is a useful security measure, it&rsquo;s still important to implement additional security practices like:</p>
+<pre><code>- Using strong passwords or key-based authentication
+- Disabling password-based authentication entirely and ONLY using key-based auth
+- Enabling firewall rules to limit access to the SSH port
+</code></pre>
+<p>That all being said, here&rsquo;s how to change the default ssh port. Firstly, make sure you are logged in the server and use a text editor of your choice to edit the SSH config file. I am, and most others are, using sshd so that would be <code>sudo nano /etc/ssh/sshd_config</code>. In this file you will see something similar to below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># This is the sshd server system-wide configuration file.  See</span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># sshd_config(5) for more information.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># This sshd was compiled with PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># The strategy used for options in the default sshd_config shipped with</span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># OpenSSH is to specify options with their default value where</span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># possible, but leave them commented.  Uncommented options override the</span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># default value.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Include /etc/ssh/sshd_config.d/*.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">#Port 22</span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">#AddressFamily any</span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">#ListenAddress 0.0.0.0</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Simply uncomment and change the line with &ldquo;Port 22&rdquo; to something like &ldquo;Port 44291&rdquo;. Once this is done, save and exit the file. Now all you have to do is restart the sshd service to finalize the changes by running <code>sudo systemctl restart sshd</code> or <code>sudo systemctl restart ssh</code>. You should also change your firewall rules to allow tcp traffic on this port and then disable port 22. Using ufw this is achieved by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo ufw allow 44291/tcp <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> sudo ufw deny 22/tcp
+</span></span></code></pre></div><p>You may also benefit from rebooting the server using <code>sudo reboot</code>. Now when you connect via ssh, make sure you add the <code>p</code> flag and specify the port that you set. For example, with port 44291 set and the above server IP, the login would now look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -i ~/.ssh/example -p <span style="color:#a5d6ff">44291</span> juke@192.168.1.1
+</span></span></code></pre></div><p>Make sure to update your Port Forwarding on your router to use this new internal port that you have set, if you have not already. You can even configure the Port Forwarding to use a different external port that is forward to this obfuscated port, for example, forwarding 15683 to 44291. Then if you are going to ssh from outside your network you would need to do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -i ~/.ssh/example -p <span style="color:#a5d6ff">15683</span> juke@<span style="color:#ff7b72;font-weight:bold">[</span>your public IP<span style="color:#ff7b72;font-weight:bold">]</span>
+</span></span></code></pre></div><h3 id="updates">
+  Updates
+  <a class="heading-link" href="#updates">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Any updates being made will be below. Here is a table with jumps to various dates with a short description of changes made:</p>
+<blockquote>
+<p>Date: Short description</p>
+<p><a href="#7-September-2024" >7 September 2024</a>: Changing default ssh port</p>
+</blockquote>
+<h4 id="7-september-2024">
+  7 September 2024
+  <a class="heading-link" href="#7-september-2024">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Added information on changing the default ssh port.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Learn more about <code>ssh-keygen</code> <a href="https://linux.die.net/man/1/ssh-keygen"  class="external-link" target="_blank" rel="noopener">here</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Learn more about SSH key encryption algorithms <a href="https://goteleport.com/blog/comparing-ssh-keys/"  class="external-link" target="_blank" rel="noopener">here</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Learn more about flags <a href="https://www.ibm.com/docs/pt/aix/7.3?topic=names-command-flags"  class="external-link" target="_blank" rel="noopener">here</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>Learn more about <code>ssh-copy-id</code> <a href="https://linux.die.net/man/1/ssh-copy-id"  class="external-link" target="_blank" rel="noopener">here</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+      </div>
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2023 -
+    
+    2025
+    
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

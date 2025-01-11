@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  How To Setup Traefik For Reverse Proxying Using Portainer (Docker)  · Jukelyn
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="description" content="How to use traefik to reverse proxy.">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="How To Setup Traefik For Reverse Proxying Using Portainer (Docker) "/>
+<meta name="twitter:description" content="How to use traefik to reverse proxy."/>
+
+<meta property="og:title" content="How To Setup Traefik For Reverse Proxying Using Portainer (Docker) " />
+<meta property="og:description" content="How to use traefik to reverse proxy." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://jukelyn.com/posts/traefik/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-05-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-05-30T00:00:00+00:00" />
+
+
+
+
+
+<link rel="canonical" href="http://jukelyn.com/posts/traefik/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-dark">
+  
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://jukelyn.com/">
+      Jukelyn
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">About me</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog Posts</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/contact/">Contact Me</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://jukelyn.com/posts/traefik/">
+              How To Setup Traefik For Reverse Proxying Using Portainer (Docker) 
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-05-30T00:00:00Z">
+                May 30, 2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/traefik/">Traefik</a>
+      <span class="separator">•</span>
+    <a href="/categories/reverse-proxy/">Reverse Proxy</a>
+      <span class="separator">•</span>
+    <a href="/categories/website/">Website</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><a href="#updates" >Jump to Updates</a></p>
+<h3 id="what-is-traefik">
+  What is traefik?
+  <a class="heading-link" href="#what-is-traefik">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Traefik is an open-source edge router and reverse proxy that manages and routes traffic to services dynamically. It integrates with technologies like Docker and Kubernetes, automatically detects changes, supports multiple protocols (HTTP, HTTPS, TCP, WebSocket), and includes features like automatic SSL/TLS certificates from Let&rsquo;s Encrypt (sometimes a pain in the ass). Traefik also offers middlewares for added functionalities and extensive observability through metrics and logs, making it ideal for scalable, high-traffic microservices environments.</p>
+<h3 id="installing-and-using-traefik-as-a-reverse-proxy-with-ssltls">
+  Installing and using traefik as a reverse proxy (with SSL/TLS)
+  <a class="heading-link" href="#installing-and-using-traefik-as-a-reverse-proxy-with-ssltls">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>I only use traefik as a reverse proxy and SSL/TLS for this site. You may also know that nginx has a reverse proxy manager as well but I find traefik to be easier to use and I like the web UI more as well. I may add some middlewares in the future but at the moment, I don&rsquo;t feel like it. Anyways, for Docker containers I prefer using a configuration file and docker compose to spin up containers. You could also spawn containers using commands or a DockerFile (similar to the configuration file + compose method) but I prefer yaml so I will be doing that over DockerFile.</p>
+<p>This is what my full traefik <code>docker-compose.yml</code> looks like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">version</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#39;3&#39;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">services</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">reverse-proxy</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">container_name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">traefik</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">image</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">traefik:v2.11.6</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">ports</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># The HTTP port</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">&#34;80:80&#34;</span><span style="color:#6e7681"> </span><span style="color:#8b949e;font-style:italic"># web</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">&#34;443:443&#34;</span><span style="color:#6e7681"> </span><span style="color:#8b949e;font-style:italic"># websecure</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># The Web UI port</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">&#34;8081:8080&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">volumes</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># Config file</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># So that Traefik can listen to the Docker events</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/var/run/docker.sock:/var/run/docker.sock</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># For TLS certs not to be re-generated every time...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/etc/traefik/certs/acme.json:/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">networks</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">nginx</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">networks</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">nginx</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">external</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>Let&rsquo;s break this up into a few pieces and talk about what&rsquo;s going on here. Firstly, I know that the &ldquo;version&rdquo; property has been deprecated but I still use it anyways, feel free to omit that in your own config files. That being said, we have our services which is just traefk in this case with the <code>container_name: traefik</code> so that it looks clean in <code>docker ps</code> and Portainer. The image I am using is <code>v2.11.6</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">ports</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># The HTTP port</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">&#34;80:80&#34;</span><span style="color:#6e7681"> </span><span style="color:#8b949e;font-style:italic"># web</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">&#34;443:443&#34;</span><span style="color:#6e7681"> </span><span style="color:#8b949e;font-style:italic"># websecure</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># The Web UI port</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">&#34;8081:8080&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>These are pretty self-explanatory. I want people who still, for some reason, use http to be able to access my stuff so that&rsquo;s why port 80 is there. Port 443 is https and 8081 is the port I set to access the traefik web ui, with the internal port of 8080. You can use whatever port you want, assuming it&rsquo;s not being used for something else. In my case, I have qBittorrent on port 8080 so I&rsquo;m using port 8081 here.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">volumes</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># Config file</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># So that Traefik can listen to the Docker events</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/var/run/docker.sock:/var/run/docker.sock</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># For TLS certs not to be re-generated every time...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/etc/traefik/certs/acme.json:/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>These are the volume binds that I have set up. Notice that there is another <code>traefik.yaml</code> file that the container is using, that&rsquo;s where the rest of the set up for traefik is. Here is what that file looks like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">global</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">checkNewVersion</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">sendAnonymousUsage</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">false</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic"># -- (Optional) Change Log Level and Format here...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic">#     - loglevels [DEBUG, INFO, WARNING, ERROR, CRITICAL]</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic">#     - format [common, json, logfmt]</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">log</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"> </span><span style="color:#7ee787">level</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">DEBUG</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"> </span><span style="color:#7ee787">format</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">common</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"> </span><span style="color:#7ee787">filePath</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/var/log/traefik/traefik.log</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic"># -- (Optional) Enable Accesslog and change Format here...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic">#     - format [common, json, logfmt]</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">accesslog</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">format</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">common</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">filePath</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/var/log/traefik/access.log</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic"># -- (Optional) Enable API and Dashboard here, don&#39;t do in production</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">api</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">dashboard</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">insecure</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">entryPoints</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">web</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">address</span>:<span style="color:#6e7681"> </span>:<span style="color:#a5d6ff">80</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#8b949e;font-style:italic"># -- (Optional) Redirect all HTTP to HTTPS</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">http</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">redirections</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">entryPoint</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">          </span><span style="color:#7ee787">to</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">websecure</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">          </span><span style="color:#7ee787">scheme</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">https</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">websecure</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">address</span>:<span style="color:#6e7681"> </span>:<span style="color:#a5d6ff">443</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">certificatesResolvers</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">staging</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">acme</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">email</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">a.mehraz.cs@gmail.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">storage</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/etc/traefik/certs/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">caServer</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;https://acme-staging-v02.api.letsencrypt.org/directory&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">httpChallenge</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">entryPoint</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">web</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">production</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">acme</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">email</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">a.mehraz.cs@gmail.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">storage</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/etc/traefik/certs/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">caServer</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;https://acme-v02.api.letsencrypt.org/directory&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">httpChallenge</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">entryPoint</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">web</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">providers</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">docker</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#8b949e;font-style:italic"># -- (Optional) Enable this, if you want to expose all containers automatically</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">exposedByDefault</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">false</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">file</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">directory</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/etc/traefik</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">watch</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><!-- raw HTML omitted -->
+<p>* <em>See <a href="#18-july-2024" ><strong>18 July 2024 Update</strong></a>*</em></p>
+<p>I don&rsquo;t feel like going through every single piece and this is also not everything you are able to set up but it&rsquo;s what I have. Also, yes, I know my email is there. The main parts are the entrypoints for http and https which I named <code>web</code> and <code>websecure</code>, the redirecting from http to https, and the TLS certificate generation and storage from Let&rsquo;s Encrypt (using an http challenge). Again, there are more options that are available to you for that like DNS Challenge with a DNS provider or TLS challenge. Learn more about that <a href="https://doc.traefik.io/traefik/https/acme/"  class="external-link" target="_blank" rel="noopener">here</a>.</p>
+<h3 id="updates">
+  Updates
+  <a class="heading-link" href="#updates">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Any updates being made will be below. Here is a table with jumps to various dates with a short description of changes made:</p>
+<blockquote>
+<p>Date: Short description</p>
+<p><a href="#18-july-2024" >18 July 2024</a>: Changes to SSL</p>
+</blockquote>
+<h4 id="18-july-2024">
+  18 July 2024
+  <a class="heading-link" href="#18-july-2024">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>I have updated my traefik configuration to use my SSL certs from <a href="https://porkbun.com/products/ssl"  class="external-link" target="_blank" rel="noopener">Porkbun</a> instead of the one that traefik generates. This was mostly because I wanted to know how to add my own SSL certs if in the future I did not want to use Let&rsquo;s Encrypt. Porkbun actually generates the cert from Let&rsquo;s Encrypt so I still am using them but I cared about the part where I actually tell traefik to use a particular cert and key, not really caring where/who it is sourced from. In any case, the changes I made to <code>traefik.yaml</code> include:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">certificatesResolvers</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">staging</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">acme</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">email</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">a.mehraz.cs@gmail.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">storage</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/etc/traefik/certs/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">caServer</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;https://acme-staging-v02.api.letsencrypt.org/directory&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">httpChallenge</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">entryPoint</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">web</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">production</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">acme</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">email</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">a.mehraz.cs@gmail.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">storage</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/etc/traefik/certs/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">caServer</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;https://acme-v02.api.letsencrypt.org/directory&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">httpChallenge</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">entryPoint</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">web</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>to ↓</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">certificatesResolvers</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">porkbun</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">acme</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">email</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;a.mehraz.cs@gmail.com&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">storage</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;/etc/traefik/certs/acme.json&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">dnsChallenge</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">provider</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">porkbun</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">delayBeforeCheck</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">90</span><span style="color:#6e7681">  </span><span style="color:#8b949e;font-style:italic"># Optional, useful if DNS propagation is slow</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">production</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">acme</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">email</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">a.mehraz.cs@gmail.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">storage</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/etc/traefik/certs/acme.json</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">caServer</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;https://acme-v02.api.letsencrypt.org/directory&#34;</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">httpChallenge</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">entryPoint</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">web</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#8b949e;font-style:italic"># -- Overwrites Default Certificates (above)</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">tls</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">stores</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">default</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">defaultCertificate</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">certFile</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">certs/fullchain.pem</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">keyFile</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">certs/private.key.pem</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>I left the redundant <code>porkbun</code> field in the <code>certificatesResolvers</code> since I was using it earlier but for some reason the <code>acme.json</code> file never got propagated correctly. Instead I downloaded my &ldquo;SSL Bundle&rdquo; from Porkbun which includes the certificate for my domain, my public key, my private key, and the intermediate certificate. You typically only need the primary certificate and the private key. However, to ensure a complete chain of trust, you should combine your primary certificate (<code>domain.cert.pem</code>) and the intermediate certificate (<code>intermediate.cert.pem</code>) into a single file. Here’s how to prepare the files for Traefik:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat domain.cert.pem intermediate.cert.pem &gt; fullchain.pem <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> cp fullchain.pem /etc/traefik/certs/
+</span></span></code></pre></div><p>* <em>Note: The public.key.pem file is generally not needed for SSL/TLS configuration in Traefik.</em></p>
+<p>Now that the full certificate is where I want it, I then copied the private key into the same place as well:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp private.key.pem /etc/traefik/certs/
+</span></span></code></pre></div><p>I then made sure the permissions were correct</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chown 65532:65532 /etc/traefik/certs/fullchain.pem /etc/traefik/certs/private.key.pem
+</span></span><span style="display:flex;"><span>sudo chmod <span style="color:#a5d6ff">600</span> /etc/traefik/certs/fullchain.pem /etc/traefik/certs/private.key.pem
+</span></span></code></pre></div><p>All that was left was to edit the traefik docker compose file to include my cert</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">volumes</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#8b949e;font-style:italic"># Mount SSL certificates</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/etc/traefik/certs/fullchain.pem:/certs/fullchain.pem</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">/etc/traefik/certs/private.key.pem:/certs/private.key.pem</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>Now traefik is able to use my SSL cert instead of one that is generated from traefik. I then told my nginx webserver to use this cert, see more in the update of <a href="http://jukelyn.com/posts/nginx/#18-july-2024" title="nginx" >my nginx post</a>.</p>
+
+      </div>
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2023 -
+    
+    2025
+    
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

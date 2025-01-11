@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TLS on Jukelyn</title>
+    <link>http://jukelyn.com/categories/tls/</link>
+    <description>Recent content in TLS on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/tls/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSL/TLS Chain of Trust</title>
+      <link>http://jukelyn.com/posts/tls/</link>
+      <pubDate>Sun, 04 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/tls/</guid>
+      <description>Jump to Updates&#xA;What is TLS/SSL? Link to heading TLS (Transport Layer Security) and SSL (Secure Sockets Layer) are cryptographic protocols designed to provide secure communication over a network. TLS was developed by the Internet Engineering Task Force (IETF) in 1999 to be an upgrade/replacement for SSL which is was developed by Netscape in 1994.&#xA;Why should anybody care? Link to heading Now that you know what TLS and SSL are, why should we care?</description>
+    </item>
+  </channel>
+</rss>

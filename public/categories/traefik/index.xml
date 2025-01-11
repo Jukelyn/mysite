@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Traefik on Jukelyn</title>
+    <link>http://jukelyn.com/categories/traefik/</link>
+    <description>Recent content in Traefik on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 30 May 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/traefik/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How To Setup Traefik For Reverse Proxying Using Portainer (Docker) </title>
+      <link>http://jukelyn.com/posts/traefik/</link>
+      <pubDate>Thu, 30 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/traefik/</guid>
+      <description>Jump to Updates&#xA;What is traefik? Link to heading Traefik is an open-source edge router and reverse proxy that manages and routes traffic to services dynamically. It integrates with technologies like Docker and Kubernetes, automatically detects changes, supports multiple protocols (HTTP, HTTPS, TCP, WebSocket), and includes features like automatic SSL/TLS certificates from Let&amp;rsquo;s Encrypt (sometimes a pain in the ass). Traefik also offers middlewares for added functionalities and extensive observability through metrics and logs, making it ideal for scalable, high-traffic microservices environments.</description>
+    </item>
+  </channel>
+</rss>

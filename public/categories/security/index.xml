@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on Jukelyn</title>
+    <link>http://jukelyn.com/categories/security/</link>
+    <description>Recent content in Security on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 22 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How To Setup Vaultwarden For Self Hosted Password Managing</title>
+      <link>http://jukelyn.com/posts/vw/</link>
+      <pubDate>Mon, 22 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/vw/</guid>
+      <description>Jump to Updates&#xA;What is vaultwarden? Link to heading From the source repo1, vaultwarden is an alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.&#xA;Why vaultwarden? Link to heading Here are some of the key reasons why I am choosing to use vaultwarden:&#xA;Open Source: Vaultwarden is fully open-source, which means its code is freely available for review and modification by anyone.</description>
+    </item>
+  </channel>
+</rss>

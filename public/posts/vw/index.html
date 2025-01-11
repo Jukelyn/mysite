@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  How To Setup Vaultwarden For Self Hosted Password Managing · Jukelyn
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="description" content="How to setup vaultwarden to have a self hosted password manager.">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="How To Setup Vaultwarden For Self Hosted Password Managing"/>
+<meta name="twitter:description" content="How to setup vaultwarden to have a self hosted password manager."/>
+
+<meta property="og:title" content="How To Setup Vaultwarden For Self Hosted Password Managing" />
+<meta property="og:description" content="How to setup vaultwarden to have a self hosted password manager." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://jukelyn.com/posts/vw/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-07-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-07-22T00:00:00+00:00" />
+
+
+
+
+
+<link rel="canonical" href="http://jukelyn.com/posts/vw/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-dark">
+  
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://jukelyn.com/">
+      Jukelyn
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">About me</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog Posts</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/contact/">Contact Me</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://jukelyn.com/posts/vw/">
+              How To Setup Vaultwarden For Self Hosted Password Managing
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-07-22T00:00:00Z">
+                July 22, 2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/vaultwarden/">Vaultwarden</a>
+      <span class="separator">•</span>
+    <a href="/categories/security/">Security</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><a href="#updates" >Jump to Updates</a></p>
+<h3 id="what-is-vaultwarden">
+  What is vaultwarden?
+  <a class="heading-link" href="#what-is-vaultwarden">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>From the source repo<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, vaultwarden is an alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.</p>
+<h3 id="why-vaultwarden">
+  Why vaultwarden?
+  <a class="heading-link" href="#why-vaultwarden">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Here are some of the key reasons why I am choosing to use vaultwarden:</p>
+<ol>
+<li><strong>Open Source</strong>: Vaultwarden is fully open-source, which means its code is freely available for review and modification by anyone. This transparency helps ensure security and trustworthiness.</li>
+<li><strong>Security</strong>: Vaultwarden employs strong encryption standards (AES-256 bit encryption) to protect your data. It also supports Two-Factor Authentication (2FA), adding an extra layer of security.</li>
+<li><strong>Self-Hosted</strong>: Unlike the official Bitwarden service, Vaultwarden allows you to host your password manager data on your own server or cloud instance. This gives you full control over your data and privacy.</li>
+<li><strong>Compatibility</strong>: It is compatible with Bitwarden clients, which are available on various platforms (Windows, macOS, Linux, Android, iOS, web browsers). This ensures flexibility in accessing your passwords and other stored data.</li>
+<li><strong>Community Support</strong>: Being open-source, Vaultwarden benefits from a community of developers and users who contribute to its development and provide support through forums and documentation.</li>
+</ol>
+<p>Overall, Vaultwarden is a solid choice for those looking to manage their passwords securely while retaining control over their data and server infrastructure.</p>
+<h3 id="installation-and-setup">
+  Installation and Setup
+  <a class="heading-link" href="#installation-and-setup">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>There are multiple options when it comes to installing and using vaultwarden but I prefer to have it installed within a docker container. As you may already know from my previous posts, I prefer using a <code>docker-compose.yaml</code> file for my containers. This is what the file looks like for my installation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">services</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">vaultwarden</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">container_name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">vaultwarden </span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">image</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">vaultwarden/server:latest</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">volumes</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">./vw-data:/data</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">restart</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">unless-stopped</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">environment</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">DOMAIN</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">https://vw.jukelyn.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">SIGNUPS_ALLOWED</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;false&#34;</span><span style="color:#6e7681">  </span><span style="color:#8b949e;font-style:italic"># Initially set this to true then false after first run</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">labels</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.enable=true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.middlewares.vaultwarden-ipallowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/24</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.routers.vaultwarden.entrypoints=web,websecure</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.routers.vaultwarden.rule=Host(`vw.jukelyn.com`) || Host(`vault.jukelyn.com`) || Host(`vaultwarden.jukelyn.com`)</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.routers.vaultwarden.tls=true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.services.vaultwarden.loadbalancer.server.port=80</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">security_opt</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#79c0ff">no</span>-<span style="color:#a5d6ff">new-privileges:true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">networks</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">main_kuma_net</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">networks</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">main_kuma_net</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">external</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>This is what my docker file looks like but depending on the reverse proxy you are choosing to use, you will need to edit the file to your use case. To break down the file we can first look at the first section which includes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">services</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">vaultwarden</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">container_name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">vaultwarden </span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">image</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">vaultwarden/server</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">volumes</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">./vw-data:/data</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">restart</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">unless-stopped</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">environment</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">DOMAIN</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">https://vw.jukelyn.com</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">SIGNUPS_ALLOWED</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;false&#34;</span><span style="color:#6e7681">  </span><span style="color:#8b949e;font-style:italic"># Initially set this to true then false after first run</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>We have some basic stuff here, most important being environment section. The rest of the stuff here should all be pretty self-explanatory. The environment section includes two main things that I am using, the <code>DOMAIN</code> containing the URL I use to access vaultwarden and the <code>SIGNUPS_ALLOWED</code> field. The <code>SIGNUPS_ALLOWED</code> field should be set to <code>true</code> initially so that you can create your account, if you don&rsquo;t already have one. After creating your account, you should change this to <code>false</code>, even though my application isn&rsquo;t public-facing and is only accessible from inside my home network (and/or VPN to my home network).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">...</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">labels</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.enable=true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.middlewares.vaultwarden-ipallowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/24</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.routers.vaultwarden.entrypoints=web,websecure</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.routers.vaultwarden.rule=Host(`vw.jukelyn.com`) || Host(`vault.jukelyn.com`) || Host(`vaultwarden.jukelyn.com`)</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.routers.vaultwarden.tls=true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">traefik.http.services.vaultwarden.loadbalancer.server.port=80</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">security_opt</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#79c0ff">no</span>-<span style="color:#a5d6ff">new-privileges:true</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">networks</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#a5d6ff">main_kuma_net</span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">networks</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">main_kuma_net</span>:<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">external</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
+</span></span></span></code></pre></div><p>The above contain a lot of labels that traefik uses to setup the <code>vw</code>, <code>vault</code>, and, <code>vaultwarden</code> subdomains and enables TLS on the site as well (required by vaultwarden). You may notice that the network is <code>main_kuma_net</code>, this is because traefik&rsquo;s network is called <code>main_kuma_net</code>, it&rsquo;s named this because it lives on the network that I run uptime kuma on (to monitor this container). You will also notice that any http requests are being redirected to https. Finally, the <code>security_opt</code> option allows you to configure various security options for containers. The specific option <code>no-new-privileges:true</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, is used to ensure that processes inside the container cannot gain new privileges (capabilities) once they are started. When set to true, this option ensures that the container&rsquo;s processes cannot escalate their privileges, which is a good security practice to prevent unauthorized actions or malicious activities within the container environment.</p>
+<h3 id="first-run">
+  First Run
+  <a class="heading-link" href="#first-run">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>When you first run, you will be able to go to the specified subdomain that you have set, if you set one at all, and you will be dropped to a login page. This page will need to have a valid SSL certificate in order for you to create your account, if you do not have a valid SSL certificate, you will need to fix this before using vaultwarden. I will not cover anything related to SSL/TLS here but I have shown in my <a href="http://jukelyn.com/posts/traefik/#18-july-2024" title="traefik" >traefik post</a> that I have it configured to use my SSL certs from Porkbun (from Let&rsquo;s Encrypt). After making an account, you are now dropped into the Web UI for vaultwarden. Below are some images of these pages.</p>
+<p><img alt="Vaultwarden login page" src="/images/vaultwarden_login.webp"> <img alt="Vaultwarden Web " src="/images/vaultwarden_webui.webp"></p>
+<h3 id="next-steps">
+  Next steps
+  <a class="heading-link" href="#next-steps">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>After creating an account and logging in you should get the corresponding apps and extension(s) for <em>bitwarden</em> on your devices. I installed the <a href="https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb"  class="external-link" target="_blank" rel="noopener">bitwarden extension</a> on Brave (via the Chrome Web Store). In order for you to log into this, make sure that you select the option &ldquo;self-hosted&rdquo; in the extensions options right under the email field when logging in. It will ask you for the subdomain for the server, which I entered <code>vw.jukelyn.com</code> (&ldquo;vault&rdquo; or &ldquo;vaultwarden&rdquo; are also valid subdomains I could have entered). I am then able to log in using the credentials I created in the section above.</p>
+<p>At this point, you are done and any changes you choose to make beyond this point are subject to your discretion. Personally, I downloaded all of my stored passwords into a csv file and imported them into vaultwarden and chose to also use bitwarden to store my passwords from this point on, instead of my browser. I also added the ability to use a PIN and biometrics (fingerprint and face id) to <strong>unlock</strong><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> bitwarden.</p>
+<h3 id="updates">
+  Updates
+  <a class="heading-link" href="#updates">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Any updates being made will be below. Here is a table with jumps to various dates with a short description of changes made:</p>
+<blockquote>
+<p>Date: Short description</p>
+<p>August 4, 2024: Updated <code>docker-compose.yaml</code> file.</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Learn more about vaultwarden <a href="https://github.com/dani-garcia/vaultwarden"  class="external-link" target="_blank" rel="noopener">here</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>For information on <code>no-new-privileges</code> see <a href="https://github.com/moby/moby/pull/45320"  class="external-link" target="_blank" rel="noopener">this</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Unlocking your vault causes the PIN or biometric key to decrypt the account encryption key in memory. The decrypted account encryption key is then used to decrypt all vault data in memory. Locking your vault causes all decrypted vault data, including the decrypted account encryption key, to be deleted. If you use the Lock with master password on restart option, this key is only stored in memory rather than on disk&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+      </div>
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2023 -
+    
+    2025
+    
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Website on Jukelyn</title>
+    <link>http://jukelyn.com/categories/website/</link>
+    <description>Recent content in Website on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/website/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How To Setup Nginx Proxy Manager Using Portainer (Docker) </title>
+      <link>http://jukelyn.com/posts/npm/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/npm/</guid>
+      <description>Jump to Updates&#xA;What is Nginx Proxy Manager? Link to heading Nginx Proxy Manager (NPM) is a web-based, easy-to-use tool that simplifies the management of Nginx reverse proxies. It allows users to manage their reverse proxies, SSL certificates, and forwarding rules with a graphical user interface (GUI), making it much easier for beginners or non-experts to set up and manage web servers. Here&amp;rsquo;s an overview of what Nginx Proxy Manager offers:</description>
+    </item>
+    <item>
+      <title>SSL/TLS Chain of Trust</title>
+      <link>http://jukelyn.com/posts/tls/</link>
+      <pubDate>Sun, 04 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/tls/</guid>
+      <description>Jump to Updates&#xA;What is TLS/SSL? Link to heading TLS (Transport Layer Security) and SSL (Secure Sockets Layer) are cryptographic protocols designed to provide secure communication over a network. TLS was developed by the Internet Engineering Task Force (IETF) in 1999 to be an upgrade/replacement for SSL which is was developed by Netscape in 1994.&#xA;Why should anybody care? Link to heading Now that you know what TLS and SSL are, why should we care?</description>
+    </item>
+    <item>
+      <title>How To Setup Nginx As A Webserver Using Portainer (Docker)</title>
+      <link>http://jukelyn.com/posts/nginx/</link>
+      <pubDate>Fri, 21 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/nginx/</guid>
+      <description>Jump to Updates&#xA;What is nginx? Link to heading Nginx (pronounced &amp;ldquo;engine X&amp;rdquo;) is an open-source web server software known for its high performance, stability, and low resource usage. It serves static content, acts as a reverse proxy and load balancer, and can cache HTTP responses to improve speed and efficiency. Its simple configuration and ability to handle many simultaneous connections make it ideal for high-traffic websites. Nginx is widely used due to its flexibility and robust feature set, with both open-source and enterprise versions available.</description>
+    </item>
+    <item>
+      <title>How To Setup Traefik For Reverse Proxying Using Portainer (Docker) </title>
+      <link>http://jukelyn.com/posts/traefik/</link>
+      <pubDate>Thu, 30 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/posts/traefik/</guid>
+      <description>Jump to Updates&#xA;What is traefik? Link to heading Traefik is an open-source edge router and reverse proxy that manages and routes traffic to services dynamically. It integrates with technologies like Docker and Kubernetes, automatically detects changes, supports multiple protocols (HTTP, HTTPS, TCP, WebSocket), and includes features like automatic SSL/TLS certificates from Let&amp;rsquo;s Encrypt (sometimes a pain in the ass). Traefik also offers middlewares for added functionalities and extensive observability through metrics and logs, making it ideal for scalable, high-traffic microservices environments.</description>
+    </item>
+  </channel>
+</rss>

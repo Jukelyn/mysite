@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Jukelyn</title>
+    <link>http://jukelyn.com/categories/</link>
+    <description>Recent content in Categories on Jukelyn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://jukelyn.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nginx</title>
+      <link>http://jukelyn.com/categories/nginx/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/nginx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reverse Proxy</title>
+      <link>http://jukelyn.com/categories/reverse-proxy/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/reverse-proxy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Website</title>
+      <link>http://jukelyn.com/categories/website/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/website/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SSL</title>
+      <link>http://jukelyn.com/categories/ssl/</link>
+      <pubDate>Sun, 04 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/ssl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TLS</title>
+      <link>http://jukelyn.com/categories/tls/</link>
+      <pubDate>Sun, 04 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/tls/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Webserver</title>
+      <link>http://jukelyn.com/categories/webserver/</link>
+      <pubDate>Sun, 04 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/webserver/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Security</title>
+      <link>http://jukelyn.com/categories/security/</link>
+      <pubDate>Mon, 22 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/security/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vaultwarden</title>
+      <link>http://jukelyn.com/categories/vaultwarden/</link>
+      <pubDate>Mon, 22 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/vaultwarden/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Traefik</title>
+      <link>http://jukelyn.com/categories/traefik/</link>
+      <pubDate>Thu, 30 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/traefik/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SSH</title>
+      <link>http://jukelyn.com/categories/ssh/</link>
+      <pubDate>Fri, 15 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://jukelyn.com/categories/ssh/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
